@@ -1,0 +1,161 @@
+@use "sass:map";
+@use "./_variables" as vars;
+@use "../assets/fonts/fonts.scss" as fonts;
+@use "bootstrap/scss/bootstrap";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background-color: map.get(vars.$theme-colors, "blue") !important;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+app-footer {
+  width: 100%;
+  height: 100px;
+  margin-top: auto;
+}
+
+#app-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+#page {
+  flex: 1;
+  width: 100vw;
+}
+
+.container, .container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.container-fluid {
+  width: 100vw !important;
+}
+
+@mixin heading-styles($size-min, $size-max) {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
+  color: inherit;
+  font-size: clamp($size-min, 3vw, $size-max);
+}
+
+h1 { @include heading-styles(1.8rem, 4rem); font-weight: 700; }
+h2 { @include heading-styles(1.65rem, 3rem); font-weight: 600; }
+h3 { @include heading-styles(1.4rem, 2rem); font-weight: 500; }
+h4 { @include heading-styles(1.1rem, 1.5rem); font-weight: 500; }
+h5 { @include heading-styles(1rem, 1.3rem); font-weight: 500; }
+h6 { @include heading-styles(0.8rem, 1rem); font-weight: 400; }
+
+ul, li, a {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: clamp(0.675rem, 2vw, 1rem);
+  color: map.get(vars.$theme-colors, "grey");
+}
+
+p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: clamp(0.775rem, 2vw, 0.95rem);
+  color: inherit;
+}
+
+#back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: none;
+  width: 50px;
+  height: 50px;
+  background-color: map.get(vars.$theme-colors, "blue-6");
+  color: map.get(vars.$theme-colors, "beige");
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+
+  @media (max-width: map.get(vars.$breakpoints, "md")) {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+#back-to-top.show { display: flex; opacity: 1; visibility: visible; }
+
+body.skills-page              .skills-wrapper              .first-section { background: url("/assets/img/skills/office-wall-4.webp") no-repeat center/cover; }
+body.office-page              .office-wrapper              .first-section { background: url("/assets/img/office/office-wall-2.webp") no-repeat center/cover; }
+body.auctions-page            .auctions-wrapper            .first-section { background: url("/assets/img/auctions/grand-theatre.webp") no-repeat center/cover; }
+body.selected-auction-page    .selected-auction-wrapper    .first-section,
+body.legal-documents-page     .legal-wrapper               .first-section,
+body.dpo-page                 .dpo-wrapper                 .first-section,
+body.cookies-page             .cookies-wrapper             .first-section,
+body.legal-mentions-page      .legal-mentions-wrapper      .first-section,
+body.privacy-page             .privacy-wrapper             .first-section,
+body.rectification-page       .rectification-wrapper       .first-section,
+body.erasure-page             .erasure-wrapper             .first-section { background: url("/assets/img/legal-documents/livres-droit.webp") no-repeat center/cover; }
+
+/* ─────────  Divers  ───────── */
+.grecaptcha-badge       { display: none !important; }
+body.contact-page .grecaptcha-badge { display: block !important; }
+body.auctions-page .site-footer,
+body.contact-page  .site-footer     { border-top: 1px solid map.get(vars.$theme-colors, "gold") !important; }
+body.selected-team-page .header-container { background-color: map.get(vars.$theme-colors, "light-blue") !important; border-bottom: 1px solid map.get(vars.$theme-colors, "gold") !important; }
+body.selected-team-page .text-icon  { color: map.get(vars.$theme-colors, "blue") !important; }
+
+.grecaptcha-badge {
+  bottom: 12vh !important;
+  right: 10px;
+  width: 256px;
+  height: 60px;
+  display: block;
+  transition: right 0.3s;
+  position: fixed;
+  right: -186px;
+  box-shadow: gray 0px 0px 5px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .grecaptcha-badge { transform: scale(0.85); }
+}
+
+@media (max-width: 768px) {
+  .grecaptcha-badge { transform: scale(0.75); }
+}
+
+
+
