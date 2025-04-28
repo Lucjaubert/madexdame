@@ -1,65 +1,58 @@
-import { APP_BASE_HREF } from '@angular/common';
-import { CommonEngine, isMainModule } from '@angular/ssr/node';
+import 'zone.js/node';
 import express from 'express';
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import bootstrap from './main.server';
+import { join } from 'path';
+import { CommonEngine } from '@angular/ssr';
+import { APP_BASE_HREF } from '@angular/common';
+import cors from 'cors';
+import fetch from 'node-fetch';
 
-const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-const browserDistFolder = resolve(serverDistFolder, '../browser');
-const indexHtml = join(serverDistFolder, 'index.server.html');
+// Chemins de build
+const DIST_FOLDER = "/var/www/lucjaubert_c_usr14/data/www/madedame.fr/madedame/browser";
+const SSR_FOLDER  = "/var/www/lucjaubert_c_usr14/data/www/madedame.fr/madedame/server";
+
+const mainServer  = require(join(SSR_FOLDER, 'main.js')).default;
 
 const app = express();
-const commonEngine = new CommonEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+// Middleware CORS pour interagir avec WordPress Headless
+app.use(cors());
+app.use(express.json());
 
-/**
- * Serve static files from /browser
- */
-app.get(
-  '**',
-  express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: 'index.html'
-  }),
-);
-
-/**
- * Handle all other requests by rendering the Angular application.
- */
-app.get('**', (req, res, next) => {
-  const { protocol, originalUrl, baseUrl, headers } = req;
-
-  commonEngine
-    .render({
-      bootstrap,
-      documentFilePath: indexHtml,
-      url: `${protocol}://${headers.host}${originalUrl}`,
-      publicPath: browserDistFolder,
-      providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
-    })
-    .then((html) => res.send(html))
-    .catch((err) => next(err));
+// Proxy vers l'API WordPress Headless (PLACÉ AVANT `app.get('*')`)
+app.use('/wp-json', async (req, res) => {
+  try {
+    const response = await fetch(`https://wordpress.madedame.fr/wp-json${req.url}`);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('❌ Erreur API WordPress:', error);
+    res.status(500).json({ error: 'Erreur lors de la récupération des données WordPress' });
+  }
 });
 
-/**
- * Start the server if this module is the main entry point.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
- */
-if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4000;
-  app.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
-  });
-}
+// Sert les fichiers statiques (Angular côté client)
+app.get('*.*', express.static(DIST_FOLDER, { maxAge: '1y' }));
+
+// Angular SSR sur la racine
+app.get('*', (req: express.Request, res: express.Response) => {
+  const engine = new CommonEngine();
+  engine
+    .render({
+      bootstrap: mainServer,
+      documentFilePath: join(__dirname, '..', 'browser', 'index.html'),
+      url: req.originalUrl,
+      publicPath: DIST_FOLDER, // Correction
+      providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }]
+    })
+    .then((html) => res.status(200).send(html))
+    .catch((err) => {
+      console.error('❌ Erreur lors du rendu SSR', err);
+      res.status(500).send('Une erreur est survenue');
+    });
+});
+
+// Définition du port
+const PORT = parseInt(process.env['PORT'] || '4000', 10);
+app.listen(PORT, () => {
+  console.log(`✅ Serveur Node SSR en cours sur http://localhost:${PORT}`);
+});

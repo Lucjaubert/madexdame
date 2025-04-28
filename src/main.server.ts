@@ -8,7 +8,7 @@ export default function bootstrap(): Promise<ApplicationRef> {
   return bootstrapApplication(AppComponent, {
     providers: [
       provideServerRendering(),
-      { provide: APP_ID, useValue: 'madexdame-app' },
+      { provide: APP_ID, useValue: 'madedame-app' },
       ...(appConfig.providers || []),
     ],
   });

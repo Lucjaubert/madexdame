@@ -17,7 +17,7 @@ body, html {
   min-height: 100%;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  background-color: map.get(vars.$theme-colors, "blue") !important;
+  background-color: map.get(vars.$theme-colors, "grey") !important;
   overflow-x: hidden;
 }
 
@@ -114,48 +114,6 @@ p {
 }
 
 #back-to-top.show { display: flex; opacity: 1; visibility: visible; }
-
-body.skills-page              .skills-wrapper              .first-section { background: url("/assets/img/skills/office-wall-4.webp") no-repeat center/cover; }
-body.office-page              .office-wrapper              .first-section { background: url("/assets/img/office/office-wall-2.webp") no-repeat center/cover; }
-body.auctions-page            .auctions-wrapper            .first-section { background: url("/assets/img/auctions/grand-theatre.webp") no-repeat center/cover; }
-body.selected-auction-page    .selected-auction-wrapper    .first-section,
-body.legal-documents-page     .legal-wrapper               .first-section,
-body.dpo-page                 .dpo-wrapper                 .first-section,
-body.cookies-page             .cookies-wrapper             .first-section,
-body.legal-mentions-page      .legal-mentions-wrapper      .first-section,
-body.privacy-page             .privacy-wrapper             .first-section,
-body.rectification-page       .rectification-wrapper       .first-section,
-body.erasure-page             .erasure-wrapper             .first-section { background: url("/assets/img/legal-documents/livres-droit.webp") no-repeat center/cover; }
-
-/* ─────────  Divers  ───────── */
-.grecaptcha-badge       { display: none !important; }
-body.contact-page .grecaptcha-badge { display: block !important; }
-body.auctions-page .site-footer,
-body.contact-page  .site-footer     { border-top: 1px solid map.get(vars.$theme-colors, "gold") !important; }
-body.selected-team-page .header-container { background-color: map.get(vars.$theme-colors, "light-blue") !important; border-bottom: 1px solid map.get(vars.$theme-colors, "gold") !important; }
-body.selected-team-page .text-icon  { color: map.get(vars.$theme-colors, "blue") !important; }
-
-.grecaptcha-badge {
-  bottom: 12vh !important;
-  right: 10px;
-  width: 256px;
-  height: 60px;
-  display: block;
-  transition: right 0.3s;
-  position: fixed;
-  right: -186px;
-  box-shadow: gray 0px 0px 5px;
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-@media (max-width: 1024px) {
-  .grecaptcha-badge { transform: scale(0.85); }
-}
-
-@media (max-width: 768px) {
-  .grecaptcha-badge { transform: scale(0.75); }
-}
 
 
 

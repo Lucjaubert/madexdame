@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "madexdame": {
+    "madedame": {
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
@@ -17,10 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/madexdame/browser",
+            "outputPath": "dist/madedame/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/assets",
@@ -62,14 +61,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "madexdame:build"
+            "buildTarget": "madedame:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "madexdame:build:production"
+              "buildTarget": "madedame:build:production"
             },
             "development": {
-              "buildTarget": "madexdame:build:development"
+              "buildTarget": "madedame:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -77,8 +76,8 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/madexdame/server",
-            "main": "src/main.server.ts",
+            "outputPath": "dist/madedame/server",
+            "main": "src/server.ts",
             "tsConfig": "tsconfig.server.json"
           },
           "configurations": {
@@ -92,15 +91,15 @@
         "prerender": {
           "builder": "@angular-devkit/build-angular:prerender",
           "options": {
-            "browserTarget": "madexdame:build:production",
-            "serverTarget": "madexdame:server:production",
+            "browserTarget": "madedame:build:production",
+            "serverTarget": "madedame:server:production",
             "routes": ["/"]
           }
         },
         "deploy-assets": {
           "builder": "@angular-devkit/build-angular:copy",
           "options": {
-            "outputPath": "dist/madexdame",
+            "outputPath": "dist/madedame",
             "assets": [
               "server.mjs",
               "bootstrap-proxy.cjs",
@@ -111,8 +110,8 @@
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
-            "browserTarget": "madexdame:build:production",
-            "serverTarget": "madexdame:server:production"
+            "browserTarget": "madedame:build:production",
+            "serverTarget": "madedame:server:production"
           },
           "defaultConfiguration": "production"
         },
@@ -123,10 +122,6 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": ["src/assets"],
