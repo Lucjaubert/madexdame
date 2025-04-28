@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist/madexdame/server",
+    "outDir": "dist/madedame/server",
     "target": "ES2022",
     "module": "CommonJS",
     "types": ["node"],
@@ -11,7 +11,8 @@
   "files": [
     "server.ts",
     "src/main.server.ts",
-    "src/app/app.config.ts"
+    "src/app/app.config.ts",
+    "src/server.ts"
   ],
   "exclude": [
     "src/test.ts",

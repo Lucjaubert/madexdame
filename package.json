@@ -1,5 +1,5 @@
 {
-  "name": "madexdame",
+  "name": "madedame",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -7,11 +7,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:ssr": "ng build --configuration production && ng run madexdame:server:production",
-    "serve:ssr": "node --experimental-specifier-resolution=node dist/madexdame/server/server.mjs",
+    "build:ssr": "ng build && ng run madedame:server",
+    "serve:ssr": "node dist/madedame/server/main.js",
     "start:ssr": "npm run build:ssr && npm run serve:ssr",
-    "dev:ssr": "ng run madexdame:serve-ssr",
-    "prerender": "ng run madexdame:prerender"
+    "dev:ssr": "ng run madedame:serve-ssr",
+    "prerender": "ng run madedame:prerender"
   },
   "dependencies": {
     "@angular/animations": "^19.1.0",
@@ -33,11 +33,11 @@
     "express-static-gzip": "2.1.8",
     "glob": "11.0.0",
     "gsap": "^3.12.5",
-    "madexdame": "file:",
+    "madedame": "file:",
     "node-fetch": "^3.3.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.15.0"
+    "zone.js": "^0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.1.5",
@@ -49,6 +49,7 @@
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
+    "browser-sync": "^3.0.0",
     "cssnano": "7.0.6",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",

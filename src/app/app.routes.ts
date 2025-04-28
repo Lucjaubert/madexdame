@@ -6,7 +6,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/homepage/homepage.component').then((m) => m.HomepageComponent),
     pathMatch: 'full',
-    title: 'Madexdame'
+    title: 'Madedame'
   },
   {
     path: '**',
